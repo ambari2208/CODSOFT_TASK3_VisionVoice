@@ -1,74 +1,145 @@
-# CODSOFT_TASK3 - VisionVoice Image Captioning AI
+# VisionVoice – AI Image Captioning | CodSoft Internship Task 3
 
-VisionVoice is a polished web application that generates natural-language descriptions of uploaded images. It uses **Salesforce BLIP**, a pre-trained vision-language transformer, to connect computer vision with natural-language processing.
+## About the Project
 
-## What it demonstrates
+VisionVoice is an AI-powered image captioning web application that generates natural-language descriptions of uploaded images.
 
-- Computer vision: BLIP's image encoder extracts meaningful visual features.
-- Natural-language processing: the language decoder turns those features into a fluent caption.
-- Pre-trained transformer inference: the project uses `Salesforce/blip-image-captioning-base` through Hugging Face Transformers.
-- Responsive user interface: users can drag and drop or select an image, preview it, guide the caption with an optional phrase, and copy the result.
+The project uses **Salesforce BLIP (Bootstrapping Language-Image Pre-training)**, a pre-trained vision-language model, to understand image content and convert it into meaningful captions.
 
-## Project structure
+I built this project to explore how computer vision and natural language processing can work together to make visual information easier to understand.
+
+## Features
+
+- **Image Upload:** Upload images using drag and drop or file selection.
+- **Image Preview:** Preview the selected image before generating a caption.
+- **AI Caption Generation:** Generate descriptions using the BLIP model.
+- **Optional Starting Phrase:** Provide a phrase to guide caption generation.
+- **Copy Caption:** Copy the generated description with one click.
+- **Image Validation:** Supports JPG, JPEG, PNG, and WebP formats.
+- **Upload Size Limit:** Accepts images up to 8 MB.
+- **Responsive Interface:** A clean interface that adapts to different screen sizes.
+
+## Technologies Used
+
+- **Python** – Main programming language.
+- **Flask** – Backend web framework.
+- **Salesforce BLIP** – Pre-trained image captioning model.
+- **PyTorch** – Deep learning framework.
+- **Hugging Face Transformers** – Model and processor implementation.
+- **Pillow** – Image processing and validation.
+- **HTML, CSS and JavaScript** – Frontend development.
+
+## Project Structure
 
 ```text
-CODSOFT_TASK3/
-|- app.py                  # Flask routes and API
-|- caption_service.py      # Lazy-loaded BLIP inference service
-|- image_utils.py          # Safe image validation
-|- requirements.txt        # Python dependencies
-|- static/                 # Browser interface assets
-|- templates/              # Flask HTML template
-`- tests/                  # Validation tests
+CODSOFT_TASK3_VisionVoice/
+│
+├── app.py
+├── caption_service.py
+├── image_utils.py
+├── requirements.txt
+├── .gitignore
+│
+├── static/
+│   ├── app.js
+│   └── styles.css
+│
+├── templates/
+│   └── index.html
+│
+└── tests/
+    └── test_image_utils.py
 ```
 
-## Run locally
+## How to Run the Project
 
-1. Open a terminal in this project folder.
-2. Create and activate a virtual environment:
+**1. Clone the repository**
 
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
-   ```
+```bash
+git clone https://github.com/ambari2208/CODSOFT_TASK3_VisionVoice.git
+```
 
-3. Install the dependencies:
+**2. Navigate to the project folder**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+cd CODSOFT_TASK3_VisionVoice
+```
 
-4. Start the application:
+**3. Create a virtual environment**
 
-   ```bash
-   python app.py
-   ```
+```bash
+python3 -m venv .venv
+```
 
-5. Visit `http://127.0.0.1:5000` in your browser.
+**4. Activate the virtual environment**
 
-On the first caption request, Transformers downloads the BLIP model weights and stores them in its local cache. This may take several minutes and requires an internet connection only once. Later requests use the cached model.
+For macOS/Linux:
 
-## Run tests
+```bash
+source .venv/bin/activate
+```
+
+For Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+**5. Install the dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**6. Run the application**
+
+```bash
+python app.py
+```
+
+**7. Open the application**
+
+Visit the following address in your browser:
+
+```text
+http://127.0.0.1:5000
+```
+
+*Note:* The BLIP model is loaded when the first caption is requested. Its model weights are downloaded from Hugging Face on the first run, so an internet connection is required. Subsequent requests can use the locally cached model.
+
+## How It Works
+
+1. The user uploads an image through the web interface.
+2. Flask receives the image and passes it to the image validation utility.
+3. The image is checked and converted into RGB format.
+4. The BLIP processor prepares the image and optional starting phrase.
+5. The pre-trained BLIP model analyses the image and generates a caption.
+6. The generated description is returned to the frontend and displayed to the user.
+
+## Running Tests
+
+The project includes tests for image validation and image processing.
+
+Run them using:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-These tests validate successful image processing and invalid-upload handling without downloading the AI model.
+These tests check valid image processing and handling of unsupported or invalid image files without requiring the BLIP model to download.
 
-## How caption generation works
+## What I Learned
 
-1. The browser sends the selected image to `/api/caption`.
-2. The server validates the file type and decodes it safely with Pillow.
-3. `CaptionService` loads the pre-trained BLIP processor and model on the first request.
-4. BLIP encodes visual features, then generates a caption with beam search.
-5. The caption is returned to the interface and displayed for the user.
+Through this project, I explored:
 
-## Suggested video demo
+- How pre-trained vision-language models work.
+- How computer vision connects with natural language processing.
+- How to integrate a Hugging Face model into a Flask application.
+- How to handle image uploads and validate input files.
+- How to connect a Python backend with a JavaScript frontend.
 
-1. Introduce the VisionVoice interface and its upload panel.
-2. Upload a clear image containing multiple recognizable objects.
-3. Click **Generate caption** and show the loading state.
-4. Read the generated caption and use **Copy caption**.
-5. Explain that BLIP combines an image encoder with a transformer language decoder.
-6. Briefly show `caption_service.py` and point out the `caption()` method.
+---
+
+**CodSoft AI Internship – Task 3**
+
+*Image Captioning AI | VisionVoice*
